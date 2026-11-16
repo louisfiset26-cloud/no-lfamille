@@ -1,0 +1,270 @@
+<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Noël en famille</title>
+<style>
+:root{--g:#173d32;--r:#9f3037;--gold:#d8b66a;--line:#e5dece}*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#f4f1e8;color:#26342d}header{background:var(--g);color:white;padding:20px 5vw;border-bottom:4px solid var(--gold)}h1,h2,h3{font-family:Georgia,serif;color:var(--g)}header h1{color:#fff;margin:0}main{max-width:1100px;margin:25px auto;padding:0 15px}.panel{background:#fffdf8;border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:18px}button{border:0;border-radius:9px;padding:10px 14px;background:var(--g);color:white;font-weight:bold;cursor:pointer}input,select,textarea{padding:10px;border:1px solid #ccc;border-radius:8px;font:inherit}textarea{width:100%;min-height:75px}input[type=email],input[type=password]{width:100%}.hidden{display:none!important}.muted{color:#6b776f}.error{color:#a12630}.months{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}.month{border:1px solid var(--line);border-radius:12px;padding:12px}.week,.days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}.week span{text-align:center;font-size:12px}.day{padding:8px 2px;border:0;border-radius:7px;background:#f1eee6;color:#26342d}.day.selected{background:#cfe4d1;color:#17452c}.day.empty{visibility:hidden}.slots{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}.slots label{background:#f1eee6;padding:9px;border-radius:8px}.result{padding:10px 0;border-bottom:1px solid var(--line)}.schedule-calendars{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}.schedule-month{background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.schedule-week,.schedule-days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}.schedule-week span{text-align:center;font-size:12px;font-weight:bold;color:#68756d;padding:5px 0}.schedule-day{position:relative;min-height:42px;padding:6px 2px;background:#f1eee6;color:#26342d;border:1px solid transparent;border-radius:8px}.schedule-day.has-family:before,.schedule-day.has-private:after{content:"";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%}.schedule-day.has-family:before{background:#23834b}.schedule-day.has-private:after{background:#c43d45}.schedule-day.has-family.has-private:before{left:40%}.schedule-day.has-family.has-private:after{left:60%}.schedule-day.selected{background:#cfe4d1;border-color:var(--g);font-weight:bold}.schedule-day.empty{visibility:hidden}.schedule-day:disabled{opacity:.35;cursor:not-allowed}.schedule-event{padding:12px 0;border-bottom:1px solid var(--line)}.bar{height:8px;background:#eee;border-radius:9px}.bar span{display:block;height:8px;background:#245545;border-radius:9px}nav{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}nav button{background:#e8e2d5;color:var(--g)}nav button.active{background:var(--g);color:white}@media(max-width:500px){.panel{padding:14px}}
+
+/* Ambiance chaleureuse et adaptation mobile */
+:root{--g:#285744;--r:#a83d45;--gold:#d9ad55;--line:#eadcc8;--cream:#fffaf1;--ink:#3d4038;--sage:#e8f0e7;--rose:#f8e9e6}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:linear-gradient(180deg,#f8f0e3 0%,#f4eee5 48%,#edf1e9 100%);color:var(--ink);line-height:1.55;min-height:100vh}
+header{background:linear-gradient(115deg,#214d3c 0%,#32674d 65%,#8c3d40 140%);padding:clamp(20px,4vw,34px) max(18px,calc((100vw - 1100px)/2));border-bottom:5px solid var(--gold);box-shadow:0 4px 18px #36291b18}
+header h1{font-size:clamp(1.65rem,4vw,2.25rem);letter-spacing:.2px;text-shadow:0 2px 8px #0002}
+header div{color:#f7ead2;font-size:.98rem;margin-top:3px}
+main{width:min(1100px,100%);margin:clamp(14px,3vw,28px) auto;padding:0 clamp(12px,2.5vw,22px)}
+h1,h2,h3{color:#285744;line-height:1.25}
+h2{font-size:clamp(1.25rem,3vw,1.65rem)}
+h3{font-size:clamp(1.08rem,2.5vw,1.25rem)}
+.panel{background:rgba(255,253,248,.96);border:1px solid #eadcc8;border-radius:20px;padding:clamp(15px,2.5vw,24px);margin-bottom:18px;box-shadow:0 5px 18px #4b392010}
+button{background:linear-gradient(135deg,#2d654b,#214b3a);border-radius:11px;padding:11px 16px;min-height:42px;box-shadow:0 2px 5px #1c38251a;transition:transform .15s,filter .15s}
+button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #d9ad5599;outline-offset:2px}
+input,select,textarea{background:#fffefa;border:1px solid #d8cbb8;border-radius:10px;min-height:42px;max-width:100%;color:var(--ink)}
+input[type=checkbox]{accent-color:#2d654b;width:18px;height:18px;min-height:18px;flex:0 0 auto}
+label{font-weight:600}
+.muted{color:#73776d}
+.error{color:#a12630}
+nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:8px;background:#f3eadb;border:1px solid #eadcc8;border-radius:15px}
+nav button{background:#fffaf1;color:#315742;border:1px solid #e6d7c1;box-shadow:none;padding:10px 8px;white-space:normal}
+nav button.active{background:#285744;color:white;border-color:#285744}
+.month,.schedule-month{background:#fffdf8;border:1px solid #eadcc8;border-radius:15px;box-shadow:0 3px 12px #4b39200b}
+.day,.schedule-day{background:#f4efe5;border-radius:9px;min-height:40px}
+.day.selected,.schedule-day.selected{background:#dcebdc;color:#214b3a;border-color:#5b8b68}
+.slots label{background:#f4efe5;border:1px solid #eadcc8;border-radius:10px;padding:10px 12px}
+.schedule-day.has-family:before{background:#398253}.schedule-day.has-private:after{background:#b8444b}
+.result{padding:13px 0;border-bottom:1px solid #eee3d4}
+.bar{background:#eee8dd}.bar span{background:linear-gradient(90deg,#397c55,#d2a64f)}
+a{color:#9b3941;font-weight:600;overflow-wrap:anywhere}
+#content{min-width:0}#content .panel{box-shadow:0 3px 14px #4b39200a}
+@media(max-width:760px){
+ main{margin:14px auto;padding:0 12px}
+ #app>div:first-child{align-items:flex-start!important}
+ nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:14px 0}
+ nav button{min-height:44px;font-size:.92rem}
+ .months,.schedule-calendars{grid-template-columns:1fr;gap:12px}
+ .month,.schedule-month{padding:10px}
+ .week span,.schedule-week span{font-size:11px}
+ .day,.schedule-day{min-height:42px;padding:7px 1px;font-size:.92rem}
+ .slots{gap:8px}
+ .slots label{flex:1 1 125px}
+ form button{width:100%}
+}
+@media(max-width:420px){
+ header{padding:20px 16px}
+ main{padding:0 9px}
+ .panel{border-radius:16px;padding:13px;margin-bottom:13px}
+ nav{gap:6px;padding:6px}
+ nav button{font-size:.86rem;padding:9px 5px}
+ .day,.schedule-day{min-height:39px;font-size:.88rem}
+ .week,.days,.schedule-week,.schedule-days{gap:3px}
+ input,select,textarea{width:100%;font-size:16px}
+ input[type=checkbox]{width:18px}
+ .slots label{flex-basis:100%;display:flex;align-items:center;gap:8px}
+ #logout{padding:9px 12px;min-height:40px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}button{transition:none}}
+
+</style></head><body><header><h1>🎄 Noël en famille</h1><div>La magie des Fêtes, ensemble</div></header><main>
+<section id="login" class="panel"><div id="loginView"><h2>Bienvenue !</h2><p class="muted">Connecte-toi à l’espace familial.</p><form id="loginForm"><label>Adresse courriel</label><input id="email" type="email" autocomplete="username" required><label>Mot de passe</label><input id="password" type="password" autocomplete="current-password" required><p><button>Se connecter</button></p><p id="loginError" class="error" role="alert"></p></form><p><button type="button" id="showSignup" style="background:#a83d45">Créer mon compte</button></p></div><div id="signupView" class="hidden"><h2>Rejoindre la famille 🎄</h2><p class="muted">Crée ton compte avec le code familial que l’administrateur t’a donné.</p><form id="signupForm"><label>Prénom et nom</label><input id="signupName" maxlength="80" autocomplete="name" required><label>Adresse courriel</label><input id="signupEmail" type="email" autocomplete="email" required><label>Mot de passe</label><input id="signupPassword" type="password" minlength="6" autocomplete="new-password" required><label>Confirmer le mot de passe</label><input id="signupPassword2" type="password" minlength="6" autocomplete="new-password" required><label>Code familial</label><input id="signupCode" type="password" autocomplete="off" required><p><button>Créer mon compte</button></p><p id="signupError" class="error" role="alert"></p></form><button type="button" id="showLogin" style="background:#a83d45">Retour à la connexion</button></div></section>
+<section id="app" class="panel hidden"><div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap"><div><h2>Les préparatifs de Noël ✨</h2><p class="muted">Disponibilités : du 1er décembre 2026 au 10 janvier 2027.</p></div><button id="logout">Déconnexion</button></div><nav><button class="active" data-page="home">Accueil</button><button data-page="availability">Disponibilités</button><button data-page="gifts">Cadeaux</button><button data-page="schedule">Horaire</button><button data-page="meals">Repas</button></nav><div id="content"></div></section></main>
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,createUserWithEmailAndPassword,updateProfile,deleteUser,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
+import{getFirestore,doc,getDoc,setDoc,deleteDoc,collection,getDocs,query,where}from"https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyBG97_8h5XDIuRsqQ3SVEpVOkJgASMIgSE",authDomain:"noel-famille-b6c33.firebaseapp.com",projectId:"noel-famille-b6c33",storageBucket:"noel-famille-b6c33.firebasestorage.app",messagingSenderId:"304714153210",appId:"1:304714153210:web:f0b0555b80dde750bd1d43"};
+const app=initializeApp(cfg),auth=getAuth(app),db=getFirestore(app),$=x=>document.getElementById(x);let user,avail={},chosen;
+$("showSignup").onclick=()=>{$("loginView").classList.add("hidden");$("signupView").classList.remove("hidden");$("signupError").textContent=""};
+$("showLogin").onclick=()=>{$("signupView").classList.add("hidden");$("loginView").classList.remove("hidden");$("loginError").textContent=""};
+$("loginForm").onsubmit=async e=>{e.preventDefault();try{await signInWithEmailAndPassword(auth,$("email").value.trim(),$("password").value);$("loginError").textContent=""}catch(e){$("loginError").textContent="Connexion impossible : vérifie tes identifiants."}};
+$("signupForm").onsubmit=async e=>{
+ e.preventDefault();
+ const name=$("signupName").value.trim(),email=$("signupEmail").value.trim(),password=$("signupPassword").value,confirmPassword=$("signupPassword2").value,code=$("signupCode").value;
+ const msg=$("signupError");msg.textContent="";
+ if(password!==confirmPassword){msg.textContent="Les deux mots de passe ne correspondent pas.";return;}
+ if(password.length<6){msg.textContent="Le mot de passe doit contenir au moins 6 caractères.";return;}
+ let createdUser=null;
+ try{
+  const credential=await createUserWithEmailAndPassword(auth,email,password);createdUser=credential.user;
+  await updateProfile(createdUser,{displayName:name});
+  await setDoc(doc(db,"inviteAttempts",createdUser.uid),{code,createdAt:Date.now()});
+  await setDoc(doc(db,"users",createdUser.uid),{displayName:name,email,role:"member",createdAt:Date.now()});
+  await deleteDoc(doc(db,"inviteAttempts",createdUser.uid));
+  $("signupForm").reset();msg.textContent="Compte créé ! Bienvenue dans la famille.";
+ }catch(err){
+  console.error("Inscription refusée :",err);
+  if(createdUser){try{await deleteUser(createdUser);}catch(cleanupError){console.error("Nettoyage du compte incomplet :",cleanupError);}}
+  if(err.code==="permission-denied")msg.textContent="Code familial incorrect ou configuration Firebase incomplète. Vérifie le code et les règles Firestore.";
+  else if(err.code==="auth/email-already-in-use")msg.textContent="Cette adresse courriel possède déjà un compte. Essaie de te connecter.";
+  else if(err.code==="auth/weak-password")msg.textContent="Choisis un mot de passe d’au moins 6 caractères.";
+  else if(err.code==="auth/invalid-email")msg.textContent="L’adresse courriel n’est pas valide.";
+  else msg.textContent="Impossible de créer le compte : "+(err.message||"réessaie plus tard.");
+ }
+};
+$("logout").onclick=()=>signOut(auth);
+onAuthStateChanged(auth,async u=>{user=u;$("login").classList.toggle("hidden",!!u);$("app").classList.toggle("hidden",!u);if(u)home()});
+function home(){$("content").innerHTML='<h3>Bienvenue dans notre espace familial !</h3><p>Choisis une section dans le menu pour commencer.</p><p>📅 Disponibilités · 🎁 Cadeaux · 🕒 Horaire familial · 🍽️ Repas</p>'}
+function key(y,m,d){return y+"-"+String(m+1).padStart(2,"0")+"-"+String(d).padStart(2,"0")}
+function calendar(){let out="";for(const [y,m] of [[2026,11],[2027,0]]){let offset=(new Date(y,m,1).getDay()+6)%7,last=new Date(y,m+1,0).getDate();out+=`<div class="month"><h3>${m===11?"Décembre 2026":"Janvier 2027"}</h3><div class="week">${["Lu","Ma","Me","Je","Ve","Sa","Di"].map(x=>`<span>${x}</span>`).join("")}</div><div class="days">`;for(let i=0;i<offset;i++)out+='<button class="day empty" disabled>·</button>';for(let d=1;d<=last;d++){let k=key(y,m,d),valid=k>="2026-12-01"&&k<="2027-01-10";out+=`<button class="day ${avail[k]?"selected":""}" data-date="${k}" ${valid?"":"disabled"}>${d}</button>`}out+="</div></div>"}return out}
+async function availability(){const c=$("content");c.innerHTML="Chargement…";try{avail={};let mine=await getDocs(collection(db,"availability",user.uid,"days"));mine.forEach(x=>avail[x.id]=x.data());c.innerHTML=`<h2>📅 Mes disponibilités</h2><p class="muted">Clique sur les dates où tu peux participer. Ensuite, choisis les moments de la journée et enregistre.</p><div class="months">${calendar()}</div><div class="panel" style="margin-top:15px"><h3 id="chosenTitle">Choisis une date</h3><div class="slots"><label><input type="checkbox" id="morning"> Matin</label><label><input type="checkbox" id="afternoon"> Après-midi</label><label><input type="checkbox" id="evening"> Soir</label></div><button id="save">Enregistrer</button> <button id="remove">Retirer</button><p id="msg"></p></div><div class="panel"><h2>📊 Analyse familiale</h2><button id="analyse">Actualiser l'analyse</button><div id="results"></div></div>`;
+c.querySelectorAll("[data-date]").forEach(b=>b.onclick=()=>{chosen=b.dataset.date;$("chosenTitle").textContent=new Date(chosen+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long"});let v=avail[chosen]||{};$("morning").checked=!!v.morning;$("afternoon").checked=!!v.afternoon;$("evening").checked=!!v.evening;$("msg").textContent=""});
+$("save").onclick=async()=>{if(!chosen){$("msg").textContent="Choisis une date.";return}let v={morning:$("morning").checked,afternoon:$("afternoon").checked,evening:$("evening").checked};if(!v.morning&&!v.afternoon&&!v.evening){$("msg").textContent="Coche au moins un moment.";return}try{await setDoc(doc(db,"availability",user.uid,"days",chosen),v);avail[chosen]=v;c.querySelector(`[data-date="${chosen}"]`).classList.add("selected");$("msg").textContent="Disponibilité enregistrée !"}catch(e){$("msg").textContent="Erreur d'enregistrement. Vérifie les règles Firestore."}};
+$("remove").onclick=async()=>{if(!chosen)return;try{await deleteDoc(doc(db,"availability",user.uid,"days",chosen));delete avail[chosen];c.querySelector(`[data-date="${chosen}"]`).classList.remove("selected");$("msg").textContent="Date retirée."}catch(e){$("msg").textContent="Suppression impossible."}};
+$("analyse").onclick=analyse;await analyse()}catch(e){c.innerHTML='<p class="error">Impossible de lire les données. Mets à jour les règles Firestore selon le fichier fourni.</p>';console.error(e)}}
+async function analyse(){let r=$("results");r.textContent="Analyse…";try{let us=await getDocs(collection(db,"users")),members=us.docs.map(d=>d.id),counts={};for(let id of members){let s=await getDocs(collection(db,"availability",id,"days"));s.forEach(d=>{let v=d.data();if(v.morning||v.afternoon||v.evening)counts[d.id]=(counts[d.id]||0)+1})}let rows=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,10);r.innerHTML=rows.length?rows.map(([d,n])=>`<div class="result"><b>${new Date(d+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long"})} — ${n}/${members.length}</b><div class="bar"><span style="width:${100*n/Math.max(members.length,1)}%"></span></div></div>`).join("")+`<p><b>Meilleure date :</b> ${new Date(rows[0][0]+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long"})}</p>`:"Aucune disponibilité saisie pour l'instant."}catch(e){r.textContent="Analyse indisponible : vérifie les règles Firestore."}}
+
+async function schedule(){
+ const c=$("content");c.innerHTML="Chargement de l’horaire…";
+ try{
+  const [mineSnap,familySnap]=await Promise.all([
+   getDocs(query(collection(db,"scheduleEvents"),where("creatorId","==",user.uid))),
+   getDocs(query(collection(db,"scheduleEvents"),where("visibility","==","family")))
+  ]);
+  const all=new Map();
+  mineSnap.forEach(d=>all.set(d.id,{id:d.id,...d.data()}));
+  familySnap.forEach(d=>all.set(d.id,{id:d.id,...d.data()}));
+  const items=[...all.values()].filter(x=>x.date>="2026-12-01"&&x.date<="2027-01-31").sort((a,b)=>(a.date||"").localeCompare(b.date||"")||(a.time||"").localeCompare(b.time||""));
+  let selectedDate="2026-12-01";
+  const eventTypes={};items.forEach(x=>{if(!eventTypes[x.date])eventTypes[x.date]={family:false,private:false};if(x.visibility==="family")eventTypes[x.date].family=true;else if(x.visibility==="private")eventTypes[x.date].private=true;});
+  c.innerHTML=`<h2>🕒 Horaire de la famille</h2>
+  <p class="muted">Ajoute les activités et les rendez-vous. Un événement familial est visible par tous ; un événement personnel reste visible uniquement par toi. Les dates disponibles vont du 1er décembre 2026 au 31 janvier 2027.</p>
+  <div class="panel"><h3>📅 Calendrier des événements</h3><p class="muted">Sélectionne une journée pour voir les événements prévus ou pour ajouter une activité à cette date.</p><div style="display:flex;gap:16px;flex-wrap:wrap;margin:10px 0 16px"><span style="display:flex;align-items:center;gap:7px"><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#23834b"></i> Famille — visible par tous</span><span style="display:flex;align-items:center;gap:7px"><i style="display:inline-block;width:9px;height:9px;border-radius:50%;background:#c43d45"></i> Personnel — visible par moi</span></div><div id="scheduleCalendar" class="schedule-calendars"></div></div>
+  <div class="panel"><h3>Ajouter un événement</h3><form id="eventForm">
+   <label>Nom de l’événement</label><p><input id="eventTitle" required maxlength="120" placeholder="Ex. : Souper chez grand-maman" style="width:100%"></p>
+   <label>Type d’événement</label><p><select id="eventVisibility" style="width:100%"><option value="family">Famille — visible par tous</option><option value="private">Personnel — visible par moi seulement</option></select></p>
+   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+    <div><label>Date sélectionnée</label><p><input id="eventDate" type="date" min="2026-12-01" max="2027-01-31" required style="width:100%"></p></div>
+    <div><label>Heure</label><p><input id="eventTime" type="time" required style="width:100%"></p></div>
+   </div>
+   <label>Lieu (facultatif)</label><p><input id="eventLocation" maxlength="160" placeholder="Adresse ou endroit" style="width:100%"></p>
+   <label>Description (facultatif)</label><p><textarea id="eventDescription" maxlength="500" placeholder="Ajoute des précisions…"></textarea></p>
+   <button>Ajouter à l’horaire</button> <span id="eventMsg" class="muted"></span>
+  </form></div><div class="panel"><h3 id="selectedDayTitle">Événements du jour</h3><div id="selectedDayEvents"></div></div>
+  <h3>📋 Tous les événements</h3><div id="eventList"></div>`;
+  const months=[[2026,11,"Décembre 2026"],[2027,0,"Janvier 2027"]];
+  function renderCalendar(){
+   let html="";
+   for(const [year,month,label] of months){
+    const first=new Date(year,month,1),offset=(first.getDay()+6)%7,last=new Date(year,month+1,0).getDate();
+    html+=`<div class="schedule-month"><h3>${label}</h3><div class="schedule-week">${["Lu","Ma","Me","Je","Ve","Sa","Di"].map(x=>`<span>${x}</span>`).join("")}</div><div class="schedule-days">`;
+    for(let i=0;i<offset;i++)html+='<button type="button" class="schedule-day empty" disabled>·</button>';
+    for(let d=1;d<=last;d++){
+     const date=key(year,month,d),types=eventTypes[date]||{},active=date===selectedDate;
+     const classes=[types.family?"has-family":"",types.private?"has-private":"",""+(active?"selected":"")].filter(Boolean).join(" ");
+     const kinds=[types.family?"événement familial":"",types.private?"événement personnel":""].filter(Boolean).join(" et ");
+     html+=`<button type="button" class="schedule-day ${classes}" data-schedule-date="${date}" aria-label="${date}${kinds?", "+kinds:""}">${d}</button>`;
+    }
+    html+='</div></div>';
+   }
+   $("scheduleCalendar").innerHTML=html;
+   $("scheduleCalendar").querySelectorAll("[data-schedule-date]").forEach(b=>b.onclick=()=>selectScheduleDate(b.dataset.scheduleDate));
+  }
+  function renderSelectedDay(){
+   const dayItems=items.filter(x=>x.date===selectedDate);
+   $("selectedDayTitle").textContent="📅 "+new Date(selectedDate+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+   const box=$("selectedDayEvents");
+   if(!dayItems.length){box.innerHTML='<p class="muted">Aucun événement prévu pour cette journée.</p>';return;}
+   box.innerHTML=dayItems.map(item=>`<div class="schedule-event"><b>${escapeHtml(item.time||"")} — ${escapeHtml(item.title)}</b><div class="muted">${item.visibility==="family"?"👨‍👩‍👧‍👦 Événement familial":"🔒 Événement personnel"}${item.location?" · 📍 "+escapeHtml(item.location):""}</div>${item.description?`<p>${escapeHtml(item.description)}</p>`:""}</div>`).join("");
+  }
+  function selectScheduleDate(date){selectedDate=date;$("eventDate").value=date;renderCalendar();renderSelectedDay();$("eventMsg").textContent="Date sélectionnée.";}
+  $("eventDate").value=selectedDate;
+  $("eventDate").onchange=()=>{const d=$("eventDate").value;if(d>="2026-12-01"&&d<="2027-01-31")selectScheduleDate(d);else{$("eventMsg").textContent="Choisis une date entre le 1er décembre 2026 et le 31 janvier 2027.";$("eventDate").value=selectedDate;}};
+  $("eventForm").onsubmit=async e=>{
+   e.preventDefault();
+   const date=$("eventDate").value,title=$("eventTitle").value.trim();
+   if(!date||date<"2026-12-01"||date>"2027-01-31"){ $("eventMsg").textContent="Choisis une date entre le 1er décembre 2026 et le 31 janvier 2027.";return;}
+   try{
+    const id=doc(collection(db,"scheduleEvents")).id;
+    await setDoc(doc(db,"scheduleEvents",id),{
+     creatorId:user.uid,creatorName:user.displayName||user.email.split("@")[0],
+     title,visibility:$("eventVisibility").value,date,time:$("eventTime").value,
+     location:$("eventLocation").value.trim(),description:$("eventDescription").value.trim(),createdAt:Date.now()
+    });
+    $("eventMsg").textContent="Événement ajouté !";schedule();
+   }catch(err){console.error(err);$("eventMsg").textContent="Erreur : vérifie les règles Firestore.";}
+  };
+  const list=$("eventList");
+  if(!items.length){list.innerHTML='<p class="muted">Aucun événement pour le moment. Ajoute le premier !</p>';}
+  else for(const item of items){
+   const mine=item.creatorId===user.uid,card=document.createElement("div");card.className="panel";
+   const dateLabel=new Date(item.date+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+   card.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap"><div style="flex:1;min-width:180px"><h3 style="margin-top:0">${escapeHtml(item.title)}</h3><div><b>📅 ${escapeHtml(dateLabel)} · ${escapeHtml(item.time||"")}</b></div><div class="muted">${item.visibility==="family"?"👨‍👩‍👧‍👦 Événement familial":"🔒 Événement personnel"}${item.location?" · 📍 "+escapeHtml(item.location):""}</div>${item.description?`<p>${escapeHtml(item.description)}</p>`:""}${item.visibility==="family"&&item.creatorName?`<small class="muted">Ajouté par ${escapeHtml(item.creatorName)}</small>`:""}</div>${mine?'<button class="deleteEvent" style="background:#9f3037">Supprimer</button>':""}</div>`;
+   if(mine)card.querySelector(".deleteEvent").onclick=async()=>{if(confirm("Supprimer cet événement ?")){try{await deleteDoc(doc(db,"scheduleEvents",item.id));schedule()}catch(err){alert("Suppression impossible.")}}};
+   list.appendChild(card);
+  }
+  renderCalendar();renderSelectedDay();
+ }catch(e){console.error(e);c.innerHTML='<p class="error">Impossible de charger l’horaire. Vérifie les règles Firestore.</p>';}
+}
+async function meals(){
+ const c=$("content");c.innerHTML="Chargement des repas…";
+ try{
+  const snap=await getDocs(collection(db,"mealPlans"));
+  const items=snap.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>(a.date||"").localeCompare(b.date||"")||(a.meal||"").localeCompare(b.meal||""));
+  c.innerHTML=`<h2>🍽️ Repas de Noël</h2><p class="muted">Organisons les repas ensemble : ajoute un plat, indique qui s’en occupe et consulte ce que les autres apportent.</p>
+  <div class="panel"><h3>Ajouter un plat ou une contribution</h3><form id="mealForm">
+  <label>Date</label><p><input id="mealDate" type="date" min="2026-12-01" max="2027-01-10" required></p>
+  <label>Repas / occasion</label><p><select id="mealOccasion" style="padding:10px;border:1px solid #ccc;border-radius:8px;width:100%"><option>Réveillon de Noël</option><option>Jour de Noël</option><option>Réveillon du jour de l’An</option><option>Jour de l’An</option><option>Autre repas familial</option></select></p>
+  <label>Catégorie</label><p><select id="mealCategory" style="padding:10px;border:1px solid #ccc;border-radius:8px;width:100%"><option value="Entrée">Entrée</option><option value="Plat principal">Plat principal</option><option value="Accompagnement">Accompagnement</option><option value="Dessert">Dessert</option><option value="Boisson">Boisson</option><option value="Collation">Collation</option><option value="Autre">Autre</option></select></p>
+  <label>Plat ou contribution</label><p><input id="mealDish" required maxlength="120" placeholder="Ex. : tourtière, salade, bûche…" style="width:100%"></p>
+  <label>Qui s’en occupe ?</label><p><input id="mealPerson" required maxlength="80" placeholder="Prénom" style="width:100%"></p>
+  <label>Précisions (facultatif)</label><p><input id="mealNotes" maxlength="300" placeholder="Quantité, allergies, détails…" style="width:100%"></p>
+  <p><label style="display:flex;gap:9px;align-items:flex-start;background:#f1eee6;padding:12px;border-radius:9px"><input id="mealPrepReminder" type="checkbox" style="margin-top:4px"><span><b>C’est moi qui prépare ce plat</b><br><small class="muted">Ajoute automatiquement un rappel privé dans l’horaire, 7 jours avant le repas.</small></span></label></p>
+  <button>Ajouter au menu</button> <span id="mealMsg" class="muted"></span></form></div>
+  <h3>🥗 Menu familial partagé</h3><div id="mealList"></div>`;
+  const today=new Date();const min="2026-12-01";$("mealDate").value=min;
+  $("mealForm").onsubmit=async e=>{e.preventDefault();const date=$("mealDate").value,dish=$("mealDish").value.trim(),person=$("mealPerson").value.trim();if(!date||date<min||date>"2027-01-10"){ $("mealMsg").textContent="Choisis une date entre le 1er décembre et le 10 janvier.";return;}
+   try{
+    const id=doc(collection(db,"mealPlans")).id;
+    const createPrepReminder=$("mealPrepReminder").checked;
+    await setDoc(doc(db,"mealPlans",id),{creatorId:user.uid,creatorName:user.displayName||user.email.split("@")[0],date,meal:$("mealOccasion").value,category:$("mealCategory").value,dish,person,notes:$("mealNotes").value.trim(),prepReminder:createPrepReminder,createdAt:Date.now()});
+    let prepMessage="";
+    if(createPrepReminder){
+     const prepDateObj=new Date(date+"T12:00:00");prepDateObj.setDate(prepDateObj.getDate()-7);
+     const prepDate=prepDateObj.getFullYear()+"-"+String(prepDateObj.getMonth()+1).padStart(2,"0")+"-"+String(prepDateObj.getDate()).padStart(2,"0");
+     if(prepDate<"2026-12-01"){
+      prepMessage=" Aucun rappel n’a été créé, car il tomberait en novembre, qui n’est plus affiché dans l’horaire.";
+     }else{
+     const prepId="mealprep_"+id+"_"+user.uid;
+     try{
+      await setDoc(doc(db,"scheduleEvents",prepId),{
+       creatorId:user.uid,creatorName:user.displayName||user.email.split("@")[0],
+       title:"Préparation : "+dish,visibility:"private",date:prepDate,time:"",
+       location:"",description:"À préparer pour "+$("mealOccasion").value+" du "+date,
+       sourceMealId:id,createdAt:Date.now()
+      });
+      prepMessage=" Ton rappel privé a été ajouté à l’horaire pour le "+new Date(prepDate+"T12:00:00").toLocaleDateString("fr-CA",{day:"numeric",month:"long"})+".";
+     }catch(prepErr){console.error(prepErr);prepMessage=" Le repas est ajouté, mais le rappel n’a pas pu être créé ("+(prepErr.code||prepErr.message||"erreur inconnue")+"). Vérifie les règles Firestore.";}
+     }
+    }
+    $("mealForm").reset();$("mealDate").value=date;$("mealMsg").textContent="Ajouté au menu !"+prepMessage;meals();
+   }catch(err){console.error(err);$("mealMsg").textContent="Erreur : vérifie les règles Firestore.";}
+  };
+  const list=$("mealList");if(!items.length){list.innerHTML='<p class="muted">Aucun plat prévu pour le moment. Ajoute la première contribution !</p>';return;}
+  const groups=new Map();for(const item of items){const k=item.date+"|"+item.meal;if(!groups.has(k))groups.set(k,[]);groups.get(k).push(item);}
+  for(const [k,group] of groups){const [date,occasion]=k.split("|");const section=document.createElement("div");section.className="panel";section.innerHTML=`<h3>📅 ${new Date(date+"T12:00:00").toLocaleDateString("fr-CA",{weekday:"long",day:"numeric",month:"long"})} — ${escapeHtml(occasion)}</h3>`;
+   for(const item of group){const row=document.createElement("div");row.className="result";row.innerHTML=`<div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start"><div><b>${escapeHtml(item.dish)}</b><div class="muted">${escapeHtml(item.category)} · Apporté par : ${escapeHtml(item.person)}</div>${item.notes?`<p>${escapeHtml(item.notes)}</p>`:""}</div>${item.creatorId===user.uid?'<button class="deleteMeal" style="background:#9f3037">Supprimer</button>':""}</div>`;
+    if(item.creatorId===user.uid)row.querySelector(".deleteMeal").onclick=async()=>{if(confirm("Supprimer cette contribution au repas ?")){try{await deleteDoc(doc(db,"mealPlans",item.id));if(item.prepReminder){await deleteDoc(doc(db,"scheduleEvents","mealprep_"+item.id+"_"+user.uid)).catch(()=>{});}meals()}catch(err){alert("Suppression impossible.")}}};section.appendChild(row);
+   }list.appendChild(section);
+  }
+ }catch(e){console.error(e);c.innerHTML='<p class="error">Impossible de charger les repas. Vérifie les règles Firestore.</p>';}
+}
+async function gifts(){const c=$("content");c.innerHTML="Chargement des cadeaux…";try{
+ const ownSnap=await getDocs(query(collection(db,"giftItems"),where("ownerId","==",user.uid)));
+ const sharedSnap=await getDocs(query(collection(db,"giftItems"),where("visibility","==","shared")));
+ const all=new Map();ownSnap.forEach(d=>all.set(d.id,{id:d.id,...d.data()}));sharedSnap.forEach(d=>all.set(d.id,{id:d.id,...d.data()}));
+ const items=[...all.values()].sort((a,b)=>(a.ownerName||"").localeCompare(b.ownerName||"")||(a.title||"").localeCompare(b.title||""));
+ c.innerHTML=`<h2>🎁 Liste de cadeaux</h2><p class="muted">Ajoute tes idées et choisis si elles sont privées ou visibles par la famille. Les réservations restent cachées à la personne qui recevra le cadeau.</p>
+ <div class="panel"><h3>Ajouter un cadeau à ma liste</h3><form id="giftForm"><label>Nom du cadeau</label><p><input id="giftTitle" required maxlength="100" placeholder="Ex. : livre, jeu, chandail…" style="width:100%"></p><label>Détails (facultatif)</label><p><input id="giftDetails" maxlength="300" placeholder="Taille, couleur, modèle…" style="width:100%"></p><label>Lien (facultatif)</label><p><input id="giftUrl" type="url" placeholder="https://…" style="width:100%"></p><label>Visibilité</label><p><select id="giftVisibility" style="padding:10px;border:1px solid #ccc;border-radius:8px"><option value="private">Privé — moi seulement</option><option value="shared">Partager avec la famille</option></select></p><button>Ajouter à ma liste</button><span id="giftMsg" class="muted" style="margin-left:8px"></span></form></div>
+ <h3>🎄 Les idées de cadeaux</h3><div id="giftList"></div>`;
+ $("giftForm").onsubmit=async e=>{e.preventDefault();const title=$("giftTitle").value.trim();if(!title)return;const id=doc(collection(db,"giftItems")).id;try{await setDoc(doc(db,"giftItems",id),{ownerId:user.uid,ownerName:user.displayName||user.email.split("@")[0],title,details:$("giftDetails").value.trim(),url:$("giftUrl").value.trim(),visibility:$("giftVisibility").value,createdAt:Date.now()});$("giftForm").reset();$("giftMsg").textContent="Cadeau ajouté !";gifts()}catch(err){console.error(err);$("giftMsg").textContent="Erreur : vérifie les règles Firestore."}};
+ const list=$("giftList");if(!items.length){list.innerHTML='<p class="muted">Aucun cadeau pour le moment. Ajoute le premier !</p>';return;}
+ for(const item of items){const mine=item.ownerId===user.uid;let reserved=false; if(!mine){try{reserved=(await getDoc(doc(db,"giftReservations",item.id))).exists()}catch(err){console.warn(err)}}
+ const card=document.createElement("div");card.className="panel";card.style.marginBottom="12px";
+ const safeUrl=(item.url||"").trim();let link="";try{if(safeUrl){const u=new URL(safeUrl);if(u.protocol==="http:"||u.protocol==="https:")link=`<p><a href="${u.href.replace(/&/g,"&amp;").replace(/\"/g,"&quot;")}" target="_blank" rel="noopener">Voir le cadeau ↗</a></p>`}}catch{}
+ card.innerHTML=`<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap"><div style="flex:1;min-width:180px"><b>${escapeHtml(item.title)}</b><div class="muted">Pour : ${escapeHtml(mine?"Ma liste":item.ownerName||"Membre de la famille")} · ${item.visibility==="shared"?"Partagé":"Privé"}</div>${item.details?`<p>${escapeHtml(item.details)}</p>`:""}${link}</div><div>${mine?'<span class="muted">Ta liste</span>':reserved?'<b style="color:#9f3037">🎁 Réservé</b>':'<button class="reserve">Je m’en occupe</button>'}</div></div>${mine?'<button class="deleteGift" style="background:#9f3037;margin-top:10px">Supprimer</button>':reserved?'<p class="muted" style="margin-bottom:0">La surprise est en préparation !</p>':''}`;
+ if(!mine&&!reserved)card.querySelector(".reserve").onclick=async()=>{try{await setDoc(doc(db,"giftReservations",item.id),{reservedBy:user.uid,createdAt:Date.now()});gifts()}catch(err){alert("Ce cadeau est peut-être déjà réservé. Actualise la liste.")}};
+ if(mine)card.querySelector(".deleteGift").onclick=async()=>{if(confirm("Supprimer ce cadeau de ta liste ?")){try{await deleteDoc(doc(db,"giftItems",item.id));gifts()}catch(err){alert("Suppression impossible.")}}};
+ list.appendChild(card);
+ }
+ }catch(e){console.error(e);c.innerHTML='<p class="error">Impossible de charger les cadeaux. Vérifie les règles Firestore.</p>'}}
+function escapeHtml(v){return String(v??"").replace(/[&<>\"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]))}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("active",x===b));if(b.dataset.page==="availability")availability();else if(b.dataset.page==="home")home();else if(b.dataset.page==="gifts")gifts();else if(b.dataset.page==="meals")meals();else if(b.dataset.page==="schedule")schedule();else $("content").innerHTML=`<h2>${b.textContent}</h2><p>Cette section sera développée dans la prochaine étape.</p>`});
+</script></body></html>
