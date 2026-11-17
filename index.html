@@ -713,6 +713,131 @@
             color: #68756d;
             padding: 10px 0
         }
+
+        /* Lisibilité : espaces et hiérarchie visuelle */
+        #content {
+            display: flex;
+            flex-direction: column;
+            gap: 22px
+        }
+
+        #content>h2 {
+            margin: 8px 0 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e8d8bd
+        }
+
+        #content>h3 {
+            margin: 8px 0 0
+        }
+
+        #content>p {
+            margin: 0 0 4px;
+            max-width: 850px;
+            line-height: 1.75
+        }
+
+        #content>.panel {
+            margin: 0;
+            padding: clamp(18px, 3vw, 28px);
+            border-radius: 18px
+        }
+
+        #content .panel h2,
+        #content .panel h3 {
+            margin-top: 0;
+            margin-bottom: 14px
+        }
+
+        #content .panel p {
+            line-height: 1.7
+        }
+
+        #content form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 5px
+        }
+
+        #content form label {
+            margin: 12px 0 2px
+        }
+
+        #content form p {
+            margin: 3px 0 8px
+        }
+
+        #content form button {
+            justify-self: start;
+            margin-top: 8px
+        }
+
+        #content .result,
+        #content .activity-row,
+        #content .schedule-event {
+            padding: 16px 17px;
+            margin: 10px 0;
+            background: #fffaf1;
+            border: 1px solid #eee1ce;
+            border-radius: 13px;
+            line-height: 1.65
+        }
+
+        #content .result:last-child,
+        #content .activity-row:last-child {
+            border-bottom: 1px solid #eee1ce
+        }
+
+        #content .muted {
+            line-height: 1.6
+        }
+
+        #content .months,
+        #content .schedule-calendars {
+            gap: 20px
+        }
+
+        #content .month,
+        #content .schedule-month {
+            padding: 17px
+        }
+
+        #content .slots {
+            gap: 12px;
+            margin: 18px 0
+        }
+
+        #content .slots label {
+            margin: 0;
+            min-width: 145px
+        }
+
+        @media(min-width:900px) {
+            #content {
+                gap: 25px
+            }
+
+            #content>.panel {
+                padding: 26px 30px
+            }
+        }
+
+        @media(max-width:760px) {
+            #content {
+                gap: 16px
+            }
+
+            #content>.panel {
+                padding: 16px
+            }
+
+            #content .result,
+            #content .activity-row,
+            #content .schedule-event {
+                padding: 13px;
+                margin: 8px 0
+            }
+        }
     </style>
 </head>
 
@@ -1058,6 +1183,7 @@
         }
 
         function escapeHtml(v) { return String(v ?? "").replace(/[&<>\"']/g, ch => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[ch])) }
+
         document.querySelectorAll("nav button").forEach(b => b.onclick = () => { document.querySelectorAll("nav button").forEach(x => x.classList.toggle("active", x === b)); if (b.dataset.page === "availability") availability(); else if (b.dataset.page === "home") home(); else if (b.dataset.page === "gifts") gifts(); else if (b.dataset.page === "meals") meals(); else if (b.dataset.page === "schedule") schedule(); else if (b.dataset.page === "personal") personalSpace(); else $("content").innerHTML = `<h2>${b.textContent}</h2><p>Cette section sera développée dans la prochaine étape.</p>` });
     </script>
 </body>
