@@ -679,6 +679,40 @@
             font-size: .88rem;
             margin-top: 3px
         }
+
+        #notificationButton {
+            position: relative;
+            background: #f8f0dd;
+            color: #174b38;
+            border: 1px solid #d8b66a;
+            padding: 9px 13px
+        }
+
+        #notificationCount {
+            display: inline-grid;
+            place-items: center;
+            min-width: 20px;
+            height: 20px;
+            padding: 0 5px;
+            margin-left: 5px;
+            border-radius: 20px;
+            background: #a8323d;
+            color: white;
+            font-size: 12px
+        }
+
+        #notificationPanel {
+            background: #fffaf1;
+            border: 1px solid #e5d6bd;
+            border-radius: 14px;
+            padding: 14px;
+            margin: 12px 0
+        }
+
+        #notificationPanel .notification-empty {
+            color: #68756d;
+            padding: 10px 0
+        }
     </style>
 </head>
 
@@ -720,8 +754,12 @@
                 <div>
                     <h2>Les préparatifs de Noël ✨</h2>
                     <p class="muted">Disponibilités : du 1er décembre 2026 au 10 janvier 2027.</p>
-                </div><button id="logout">Déconnexion</button>
+                </div>
+                <div style="display:flex;gap:8px;align-items:center"><button id="notificationButton" type="button"
+                        aria-label="Ouvrir les notifications">🔔 Notifications <span id="notificationCount"
+                            class="hidden">0</span></button><button id="logout">Déconnexion</button></div>
             </div>
+            <div id="notificationPanel" class="hidden" aria-live="polite"></div>
             <nav><button class="active" data-page="home">Accueil</button><button
                     data-page="availability">Disponibilités</button><button data-page="gifts">Cadeaux</button><button
                     data-page="schedule">Horaire</button><button data-page="meals">Repas</button><button
@@ -732,9 +770,9 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile, deleteUser, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
+        import { getFirestore, doc, getDoc, setDoc, deleteDoc, collection, getDocs, query, where, onSnapshot } from "https://www.gstatic.com/firebasejs/13.2.0/firebase-firestore.js";
         const cfg = { apiKey: "AIzaSyBG97_8h5XDIuRsqQ3SVEpVOkJgASMIgSE", authDomain: "noel-famille-b6c33.firebaseapp.com", projectId: "noel-famille-b6c33", storageBucket: "noel-famille-b6c33.firebasestorage.app", messagingSenderId: "304714153210", appId: "1:304714153210:web:f0b0555b80dde750bd1d43" };
-        const app = initializeApp(cfg), auth = getAuth(app), db = getFirestore(app), $ = x => document.getElementById(x); let user, avail = {}, chosen;
+        const app = initializeApp(cfg), auth = getAuth(app), db = getFirestore(app), $ = x => document.getElementById(x); let user, avail = {}, chosen, notificationLastReadAt = 0, notificationUnsubscribe = null;
         $("showSignup").onclick = () => { $("loginView").classList.add("hidden"); $("signupView").classList.remove("hidden"); $("signupError").textContent = "" };
         $("showLogin").onclick = () => { $("signupView").classList.add("hidden"); $("loginView").classList.remove("hidden"); $("loginError").textContent = "" };
         $("loginForm").onsubmit = async e => { e.preventDefault(); try { await signInWithEmailAndPassword(auth, $("email").value.trim(), $("password").value); $("loginError").textContent = "" } catch (e) { $("loginError").textContent = "Connexion impossible : vérifie tes identifiants." } };
@@ -764,7 +802,31 @@
             }
         };
         $("logout").onclick = () => signOut(auth);
-        onAuthStateChanged(auth, async u => { user = u; $("login").classList.toggle("hidden", !!u); $("app").classList.toggle("hidden", !u); if (u) home() });
+        onAuthStateChanged(auth, async u => { user = u; $("login").classList.toggle("hidden", !!u); $("app").classList.toggle("hidden", !u); if (u) { await refreshNotifications(); home() } else { if (notificationUnsubscribe) { notificationUnsubscribe(); notificationUnsubscribe = null; } $("notificationPanel").classList.add("hidden"); $("notificationCount").classList.add("hidden") } });
+        async function refreshNotifications() {
+            if (!user) return;
+            try {
+                const statusSnap = await getDoc(doc(db, "notificationStatus", user.uid));
+                notificationLastReadAt = statusSnap.exists() ? (statusSnap.data().lastReadAt || 0) : 0;
+                if (notificationUnsubscribe) notificationUnsubscribe();
+                notificationUnsubscribe = onSnapshot(collection(db, "activity"), activitySnap => {
+                    const unread = activitySnap.docs.map(d => d.data()).filter(a => (a.createdAt || 0) > notificationLastReadAt && a.actorId !== user.uid).length;
+                    const count = $("notificationCount"); count.textContent = unread > 99 ? "99+" : String(unread); count.classList.toggle("hidden", unread === 0);
+                }, err => console.warn("Notifications indisponibles :", err));
+            } catch (err) { console.warn("Notifications indisponibles :", err) }
+        }
+        async function openNotifications() {
+            const panel = $("notificationPanel"); panel.classList.remove("hidden"); panel.innerHTML = '<b>🔔 Notifications de la famille</b><p class="muted">Chargement…</p>';
+            try {
+                const snap = await getDocs(collection(db, "activity"));
+                const rows = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(a => a.actorId !== user.uid).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0)).slice(0, 20);
+                const icons = { gift: "🎁", meal: "🍽️", event: "📅", member: "👋" };
+                panel.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><b>🔔 Notifications de la famille</b><button id="closeNotifications" type="button">Fermer</button></div>' + (rows.length ? rows.map(a => `<div class="activity-row"><div class="activity-icon">${icons[a.type] || "✨"}</div><div class="activity-text"><b>${escapeHtml(a.message || "Nouvelle activité")}</b><div class="muted">${escapeHtml(a.actorName || "Un membre")} · ${a.createdAt ? new Date(a.createdAt).toLocaleString("fr-CA", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" }) : "Date inconnue"}</div></div></div>`).join("") : '<p class="notification-empty">Aucune nouveauté pour le moment.</p>');
+                $("closeNotifications").onclick = () => panel.classList.add("hidden");
+                const now = Date.now(); await setDoc(doc(db, "notificationStatus", user.uid), { lastReadAt: now }, { merge: true }); notificationLastReadAt = now; $("notificationCount").classList.add("hidden");
+            } catch (err) { console.error(err); panel.innerHTML = '<p class="error">Impossible de charger les notifications. Vérifie les règles Firestore.</p>' }
+        }
+        $("notificationButton").onclick = () => { if ($("notificationPanel").classList.contains("hidden")) openNotifications(); else $("notificationPanel").classList.add("hidden") };
         async function logActivity(type, message) {
             try { const id = doc(collection(db, "activity")).id; await setDoc(doc(db, "activity", id), { type, message, actorId: user.uid, actorName: user.displayName || user.email.split("@")[0], createdAt: Date.now() }); }
             catch (err) { console.warn("Journal d’activité non enregistré :", err); }
